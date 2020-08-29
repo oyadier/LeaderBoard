@@ -6,9 +6,27 @@
     tools:context=".LearnersFragment">
 
     <!-- TODO: Update blank fragment layout -->
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@android:style/Widget.ProgressBar.Large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:progressBackgroundTint="@color/colorPrimaryDark"
+            android:progressTint="@color/colorPrimary"></ProgressBar>
+    </RelativeLayout>
+
+
     <TextView
+        android:id="@+id/jsonResult"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/learner_leader" />
+        android:textSize="24sp"
+        tools:text="@string/learner_leader" />
 
 </FrameLayout>

@@ -7,6 +7,10 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
+import android.widget.TextView;
+
+import static com.oyatech.leaderboard.APIParsing.finalResult;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -23,6 +27,7 @@ public class LearnersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    public static final String LEARNER_LEADER = "https://gadsapi.herokuapp.com/api/hours";
 
     public LearnersFragment() {
         // Required empty public constructor
@@ -45,20 +50,32 @@ public class LearnersFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+TextView result;
+   ProgressBar mProgressBar;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_learners, container, false);
+        View rootView =  inflater.inflate(R.layout.fragment_learners, container, false);
+
+     mProgressBar = rootView.findViewById(R.id.progress);
+       APIParsing parsing = new APIParsing();
+       parsing.execute(LEARNER_LEADER);
+
+
+       result = rootView.findViewById(R.id.jsonResult);
+       mProgressBar.setVisibility(View.INVISIBLE);
+       result.setText(finalResult);
+        return rootView;
     }
 }
