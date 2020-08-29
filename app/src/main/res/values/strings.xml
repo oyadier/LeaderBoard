@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">LEADERBOARD</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name ="learner_leader">Learner Leader</string>
+    <string name ="skilliq_leader">Skill IQ Leader</string>
+    <string name="submit">Submit</string>
+</resources>
