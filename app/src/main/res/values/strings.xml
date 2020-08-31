@@ -4,4 +4,5 @@
     <string name ="learner_leader">Learner Leader</string>
     <string name ="skilliq_leader">Skill IQ Leader</string>
     <string name="submit">Submit</string>
+    <string name="skil">\" Skill IQ Score\"</string>
 </resources>

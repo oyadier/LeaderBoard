@@ -1,12 +1,20 @@
 package com.oyatech.leaderboard;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.oyatech.leaderboard.leaners.LeaderDetails;
+
+import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,7 +22,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class SkilliQFragment extends Fragment {
-
+final String TOP_SKILL_IQ = "/api/skilliq";
+static boolean isSkill ;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -55,10 +64,44 @@ public class SkilliQFragment extends Fragment {
         }
     }
 
+    RecyclerView mRecyclerView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_skilli_q, container, false);
+       View rootView =  inflater.inflate(R.layout.fragment_learners, container, false);
+
+       mRecyclerView = rootView.findViewById(R.id.learnerRecycle);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext(),
+                RecyclerView.VERTICAL,false);
+
+        mRecyclerView.setLayoutManager(manager);
+       new SkillLearners().execute(APIUtil.leardersUrl(TOP_SKILL_IQ));
+        return rootView;
+    }
+
+    private class SkillLearners extends AsyncTask <URL,Void,String> {
+
+        String skills = null;
+        @Override
+        protected String doInBackground(URL... pURLS) {
+            try {
+                isSkill = true;
+                URL skillUrl = (URL) pURLS[0];
+                skills = APIUtil.getLearnersJSONString(skillUrl);
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+            return skills;
+        }
+
+        @Override
+        protected void onPostExecute(String pS) {
+            super.onPostExecute(pS);
+            ArrayList<LeaderDetails> skillLeaders = APIUtil.getSkillLeaders(skills);
+            RecycleViewAdapter adapter = new RecycleViewAdapter(skillLeaders);
+            mRecyclerView.setAdapter(adapter);
+        }
     }
 }

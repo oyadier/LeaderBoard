@@ -3,14 +3,14 @@ package com.oyatech.leaderboard;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-import static com.oyatech.leaderboard.APIParsing.finalResult;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +27,7 @@ public class LearnersFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    public static final String LEARNER_LEADER = "https://gadsapi.herokuapp.com/api/hours";
+    public static final String TOP_LEANER = "/api/hours";
 
     public LearnersFragment() {
         // Required empty public constructor
@@ -52,6 +52,7 @@ public class LearnersFragment extends Fragment {
     }
 TextView result;
    ProgressBar mProgressBar;
+static RecyclerView mRecyclerView;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,14 +69,17 @@ TextView result;
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_learners, container, false);
 
-     mProgressBar = rootView.findViewById(R.id.progress);
-       APIParsing parsing = new APIParsing();
-       parsing.execute(LEARNER_LEADER);
+        mRecyclerView = rootView.findViewById(R.id.learnerRecycle);
+ //    mProgressBar = rootView.findViewById(R.id.progress);
+        LinearLayoutManager manager = new LinearLayoutManager(getContext(),
+                RecyclerView.VERTICAL,false);
+        mRecyclerView.setLayoutManager(manager);
 
+        new APIParsing().execute(APIUtil.leardersUrl(TOP_LEANER));
 
-       result = rootView.findViewById(R.id.jsonResult);
-       mProgressBar.setVisibility(View.INVISIBLE);
-       result.setText(finalResult);
         return rootView;
     }
+
+
+
 }

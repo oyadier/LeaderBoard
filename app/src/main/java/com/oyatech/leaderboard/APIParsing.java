@@ -1,75 +1,38 @@
 package com.oyatech.leaderboard;
 
 import android.os.AsyncTask;
-import android.util.Log;
-import android.view.View;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
+import com.oyatech.leaderboard.leaners.LeaderDetails;
+
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-public class APIParsing extends AsyncTask<String,Void,String> {
+import static com.oyatech.leaderboard.LearnersFragment.mRecyclerView;
 
-    TextView learners;
-
- static String finalResult = " ";
+public class APIParsing extends AsyncTask<URL,Void,String> {
 
 
+ static String learnersResult = null;
     @Override
-    protected void onPreExecute() {
-
-        super.onPreExecute();
-    }
-
-    @Override
-    protected String doInBackground(String... pStrings) {
-
-
+    protected String doInBackground(URL... pURLS) {
         try {
-            URL url = new URL(pStrings[0]);
-            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
-            connection.connect();
-
-            InputStream stream = connection.getInputStream();
-            InputStreamReader reader = new InputStreamReader(stream);
-            int data = reader.read();
-
-
-            //Looping through all the data values
-            while (data != -1)
-            {
-                //converting the int values to characters
-                char retrievedData = (char) data;
-                //Storing the int value of the data into a string
-                finalResult +=retrievedData;
-                //continue reading
-                data = reader.read();
-            }
-            return finalResult;
-        } catch (IOException pE) {
-            pE.printStackTrace();
+             URL learnerUrl = (URL) pURLS[0];
+                learnersResult = APIUtil.getLearnersJSONString(learnerUrl);
+        }catch (Exception e) {
+            e.printStackTrace();
         }
-
-        return null;
+        return learnersResult;
     }
 
     @Override
     protected void onPostExecute(String pS) {
         super.onPostExecute(pS);
-        Log.d("APIParsing: ", "onPostExecute: " +pS);
-//Setting the result to a static variable
-        finalResult = pS;
 
+            ArrayList<LeaderDetails> leader = APIUtil.getLeaders(learnersResult);
+            RecycleViewAdapter adapter = new RecycleViewAdapter(leader);
+            mRecyclerView.setAdapter(adapter);
 
     }
 
-    public void allViews(View pView)
-    {
-        ProgressBar progressBar = pView.findViewById(R.id.progress);
-        progressBar.setVisibility(View.VISIBLE);
-    }
 }
