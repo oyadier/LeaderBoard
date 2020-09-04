@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import com.google.android.material.tabs.TabLayout;
+import com.oyatech.leaderboard.SubmitAsignment.Submit;
 
 public class LeaderBoard extends AppCompatActivity {
  TabLayout mTabLayout;
@@ -40,7 +41,7 @@ mTabLayout.setupWithViewPager(mViewPager);
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if ( item.getItemId() == R.id.submit)
         {
-            startActivity(new Intent(LeaderBoard.this,Submit.class));
+            startActivity(new Intent(LeaderBoard.this, Submit.class));
         }
         return super.onOptionsItemSelected(item);
     }
