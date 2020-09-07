@@ -1,13 +1,14 @@
 package com.oyatech.leaderboard;
 
 import android.os.AsyncTask;
+import android.view.View;
 
 import com.oyatech.leaderboard.leaners.LeaderDetails;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 
+import static com.oyatech.leaderboard.LearnersFragment.mProgressBar;
 import static com.oyatech.leaderboard.LearnersFragment.mRecyclerView;
 
 public class APIParsing extends AsyncTask<URL,Void,String> {
@@ -16,7 +17,7 @@ public class APIParsing extends AsyncTask<URL,Void,String> {
  static String learnersResult = null;
     @Override
     protected String doInBackground(URL... pURLS) {
-        try {
+        try {mProgressBar.setVisibility(View.VISIBLE);
              URL learnerUrl = (URL) pURLS[0];
                 learnersResult = APIUtil.getLearnersJSONString(learnerUrl);
         }catch (Exception e) {
@@ -30,8 +31,12 @@ public class APIParsing extends AsyncTask<URL,Void,String> {
         super.onPostExecute(pS);
 
             ArrayList<LeaderDetails> leader = APIUtil.getLeaders(learnersResult);
+                mProgressBar.setVisibility(View.INVISIBLE);
+
             RecycleViewAdapter adapter = new RecycleViewAdapter(leader);
+
             mRecyclerView.setAdapter(adapter);
+
 
     }
 

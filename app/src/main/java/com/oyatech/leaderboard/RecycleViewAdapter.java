@@ -13,7 +13,6 @@ import com.oyatech.leaderboard.leaners.LeaderDetails;
 
 import java.util.List;
 
-import static com.oyatech.leaderboard.SkilliQFragment.isSkill;
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.LeadersViewHolder> {
 List<LeaderDetails>leaders ;

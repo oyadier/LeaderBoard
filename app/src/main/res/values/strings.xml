@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">LEADERBOARD</string>
+    <string name="app_name" translatable="false">Leaderboard</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name ="learner_leader">Learner Leader</string>
-    <string name ="skilliq_leader">Skill IQ Leader</string>
-    <string name="submit">Submit</string>
-    <string name="skil">\" Skill IQ Score\"</string>
+    <string name ="learner_leader" translatable="false">Learner Leader</string>
+    <string name ="skilliq_leader" translatable="false">Skill IQ Leader</string>
+    <string name="submit" translatable="false">Project Submission</string>
+    <string name="skil" translatable="false">\" Skill IQ Score\"</string>
 </resources>
