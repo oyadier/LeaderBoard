@@ -9,12 +9,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Submit"
+        <activity android:name=".SubmitAsignment.Submit"
             android:label="@string/submit"
             android:parentActivityName=".LeaderBoard">
+        </activity>
+        <activity android:name=".LeaderBoard"
+            android:theme="@style/leadersTheme">
+
 
         </activity>
-        <activity android:name=".LeaderBoard"></activity>
         <activity android:name=".launcher">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

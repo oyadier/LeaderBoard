@@ -99,6 +99,10 @@ static boolean isSkill ;
         @Override
         protected void onPostExecute(String pS) {
             super.onPostExecute(pS);
+            if(!pS.isEmpty())
+            {
+
+            }
             ArrayList<LeaderDetails> skillLeaders = APIUtil.getSkillLeaders(skills);
             RecycleViewAdapter adapter = new RecycleViewAdapter(skillLeaders);
             mRecyclerView.setAdapter(adapter);
