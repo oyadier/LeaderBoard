@@ -26,7 +26,7 @@ public class LeaderBoard extends AppCompatActivity {
     //    getActionBar().setBackgroundDrawable();
 mTabLayout = findViewById(R.id.tbLayout);
 mViewPager = findViewById(R.id.viewPage);
-submit = findViewById(R.id.btnSubmit);
+submit = findViewById(R.id.btnSubmission);
 
 FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),2);
 mViewPager.setAdapter(fragmentAdapter);

@@ -1,12 +1,23 @@
 package com.oyatech.leaderboard.leaners;
 
 public class LeaderDetails {
-    String name, performance,country;
+    String name, performance,country,image;
 
     public LeaderDetails(String pName, String pPerformance, String pCountry) {
         name = pName;
         performance = pPerformance;
         country = pCountry;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public LeaderDetails(String pName, String pPerformance, String pCountry, String image) {
+        name = pName;
+        performance = pPerformance;
+        country = pCountry;
+        image = image;
     }
 
     public String getName() {
