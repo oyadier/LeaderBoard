@@ -4,19 +4,24 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.oyatech.leaderboard.leaners.LeaderDetails;
+import com.squareup.picasso.Picasso;
 
+import java.net.URL;
 import java.util.List;
+
 
 
 public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.LeadersViewHolder> {
 List<LeaderDetails>leaders ;
-
+    Context context;
+    String learner_badge = "https://res.cloudinary.com/mikeattara/image/upload/v1596700848/Top-learner.png";
     public RecycleViewAdapter(List<LeaderDetails> pLeaders) {
         leaders = pLeaders;
     }
@@ -24,7 +29,7 @@ List<LeaderDetails>leaders ;
     @NonNull
     @Override
     public LeadersViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Context context = parent.getContext();
+      context   = parent.getContext();
         ViewGroup viewGroup = (ViewGroup) LayoutInflater.from(context)
                 .inflate(R.layout.leaders,parent,false);
         return new LeadersViewHolder(viewGroup);
@@ -33,10 +38,11 @@ List<LeaderDetails>leaders ;
     @Override
     public void onBindViewHolder(@NonNull LeadersViewHolder holder, int position) {
 
-        LeaderDetails details = leaders.get(position);
+    final     LeaderDetails details = leaders.get(position);
         holder.leaderName.setText(details.getName());
-        holder.leaderPerformance.setText(details.getPerformance().concat(" Learner Hours,"));
-        holder.leaderCountry.setText(details.getCountry().concat("."));
+        holder.leaderPerformance.setText(details.getPerformance().concat(" learning hours,"));
+        holder.leaderCountry.setText(details.getCountry());
+        Picasso.with(holder.leaderName.getContext()).load(learner_badge).into(holder.leaderImage);
 
     }
 
@@ -48,12 +54,14 @@ List<LeaderDetails>leaders ;
     public class LeadersViewHolder extends RecyclerView.ViewHolder{
 
         TextView leaderName, leaderPerformance,leaderCountry;
+        ImageView leaderImage;
 
         public LeadersViewHolder(@NonNull View itemView) {
             super(itemView);
             leaderName = itemView.findViewById(R.id.tvName);
             leaderPerformance = itemView.findViewById(R.id.tvScore);
             leaderCountry = itemView.findViewById(R.id.tvCountry);
+            leaderImage = itemView.findViewById(R.id.imageLeader);
         }
 
 

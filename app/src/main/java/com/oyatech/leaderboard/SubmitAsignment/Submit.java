@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
@@ -62,12 +63,13 @@ public class Submit extends AppCompatActivity  {
 
             @Override
             public void onClick(View v) {
+                confirmation();
                 String firstName = name.getText().toString();
                 String LName = lastName.getText().toString();
                 String UserEmail = email.getText().toString();
                 String git = gitAddress.getText().toString();
                 if(!firstName.isEmpty() && !LName.isEmpty() && !UserEmail.isEmpty()&&!git.isEmpty()) {
-                Call<StudentData>mStudentDataCall = submitAssignment.sendAssignment(
+            final    Call<StudentData>mStudentDataCall = submitAssignment.sendAssignment(
                         firstName,LName,UserEmail,git
                 );
                 mStudentDataCall.enqueue(new Callback<StudentData>() {
@@ -131,6 +133,16 @@ public class Submit extends AppCompatActivity  {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
         }
+    }
+    private void confirmation()
+    {
+        mDialog.setTitle("Please confirm submission");
+        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                Toast.makeText(Submit.this, "Submission Canceled", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
 

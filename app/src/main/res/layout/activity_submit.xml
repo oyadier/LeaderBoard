@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/submit"
+    android:background="@drawable/submission"
     tools:context=".SubmitAsignment.Submit">
 
 
@@ -73,18 +73,20 @@
      app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
      app:layout_constraintEnd_toEndOf="parent"
      app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/btnSubmit"
         android:layout_width="150dp"
         android:layout_height="52dp"
-        android:layout_marginBottom="@android:dimen/thumbnail_height"
+        android:layout_marginBottom="216dp"
+        android:background="@drawable/round"
         android:backgroundTint="@android:color/holo_orange_dark"
         android:elevation="1dp"
-       android:background="@drawable/round"
         android:text="Submit"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView

@@ -6,7 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class SubmitServices {
-    private final static String SEND_URL ="https://docs.google.com/forms/d/e/";
+    private final static String SEND_URL ="https://gadsapi.herokuapp.com";
     private static Retrofit.Builder builder = new Retrofit.Builder().baseUrl(SEND_URL)
             .addConverterFactory(GsonConverterFactory.create());
     private static Retrofit retrofit = builder.build();
