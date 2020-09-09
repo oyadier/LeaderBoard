@@ -1,6 +1,7 @@
-package com.oyatech.leaderboard.skills;
+package com.oyatech.leaderboard.skillIQ;
 
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,20 +12,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.Toast;
 
+import com.oyatech.leaderboard.Util.APIUtil;
 import com.oyatech.leaderboard.R;
-import com.oyatech.leaderboard.SubmitAsignment.SubmitServices;
 import com.oyatech.leaderboard.leaners.LeaderDetails;
 
-import java.util.List;
+import java.net.URL;
+import java.util.ArrayList;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class SkilliQFragment extends Fragment {
-    final String TOP_SKILL_IQ = "/api/skilliq";
+     public final String TOP_SKILL_IQ = "/api/skilliq";
 
     public SkilliQFragment() {
         // Required empty public constructor
@@ -50,29 +48,38 @@ public class SkilliQFragment extends Fragment {
         mRecyclerView = rootView.findViewById(R.id.learnerRecycle);
         LinearLayoutManager manager = new LinearLayoutManager(getContext(),
                 RecyclerView.VERTICAL, false);
-
         mRecyclerView.setLayoutManager(manager);
-        //implementing the retrofit interface
-        SkillsLearners skill = new SubmitServices().buildServices(SkillsLearners.class);
-        //using the  submit object to fully implement the interface
-        final Call<List<LeaderDetails>> detailsCall = skill.getSkillLeaders();
-        //calling the enqueue method to make the RESTful endpoint request
-        detailsCall.enqueue(new Callback<List<LeaderDetails>>() {
-            @Override
-            public void onResponse(Call<List<LeaderDetails>> call, Response<List<LeaderDetails>> response) {
-                //binding the adapter with the result of the request
-
-                    progress.setVisibility(View.INVISIBLE);
-                mRecyclerView.setAdapter(new SkillAdapter(response.body()));
-            }
-
-            @Override
-            public void onFailure(Call<List<LeaderDetails>> call, Throwable t) {
-
-                Toast.makeText(getContext(), "Failed to load data", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        //returning a Url to execute callback
+       new SkillAPI().execute(APIUtil.leardersUrl(TOP_SKILL_IQ));
 return rootView;
+    }
+
+    public class SkillAPI extends AsyncTask<URL,Void,String> {
+
+
+        public String skillResult = null;
+
+        @Override
+        protected String doInBackground(URL... pURLS) {
+            try {
+                progress.setVisibility(View.VISIBLE);
+                URL learnerUrl = (URL) pURLS[0];
+                skillResult = APIUtil.getLearnersJSONString(learnerUrl);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return skillResult;
+        }
+
+        @Override
+        protected void onPostExecute(String pS) {
+            super.onPostExecute(pS);
+            ArrayList<LeaderDetails> leaderSkill = APIUtil.getSkillLeaders(skillResult);
+            progress.setVisibility(View.INVISIBLE);
+            SkillAdapter adapterSkill = new SkillAdapter(leaderSkill);
+            mRecyclerView.setAdapter(adapterSkill);
+
+
+        }
     }
 }

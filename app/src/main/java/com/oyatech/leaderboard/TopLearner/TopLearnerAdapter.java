@@ -1,4 +1,4 @@
-package com.oyatech.leaderboard;
+package com.oyatech.leaderboard.TopLearner;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,19 +10,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.oyatech.leaderboard.R;
 import com.oyatech.leaderboard.leaners.LeaderDetails;
 import com.squareup.picasso.Picasso;
 
-import java.net.URL;
 import java.util.List;
 
 
 
-public class RecycleViewAdapter extends RecyclerView.Adapter<RecycleViewAdapter.LeadersViewHolder> {
+public class TopLearnerAdapter extends RecyclerView.Adapter<TopLearnerAdapter.LeadersViewHolder> {
 List<LeaderDetails>leaders ;
     Context context;
     String learner_badge = "https://res.cloudinary.com/mikeattara/image/upload/v1596700848/Top-learner.png";
-    public RecycleViewAdapter(List<LeaderDetails> pLeaders) {
+    public TopLearnerAdapter(List<LeaderDetails> pLeaders) {
         leaders = pLeaders;
     }
 
@@ -38,7 +38,7 @@ List<LeaderDetails>leaders ;
     @Override
     public void onBindViewHolder(@NonNull LeadersViewHolder holder, int position) {
 
-    final     LeaderDetails details = leaders.get(position);
+        final     LeaderDetails details = leaders.get(position);
         holder.leaderName.setText(details.getName());
         holder.leaderPerformance.setText(details.getPerformance().concat(" learning hours,"));
         holder.leaderCountry.setText(details.getCountry());
