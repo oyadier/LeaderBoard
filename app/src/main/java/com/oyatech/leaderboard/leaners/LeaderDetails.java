@@ -10,13 +10,6 @@ public class LeaderDetails {
     }
 
 
-    public LeaderDetails(String pName, String pPerformance, String pCountry, String image) {
-        name = pName;
-        performance = pPerformance;
-        country = pCountry;
-        image = image;
-    }
-
     public String getName() {
         return name;
     }

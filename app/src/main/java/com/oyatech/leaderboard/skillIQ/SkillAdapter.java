@@ -17,34 +17,33 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolderSkill> {
+    //Creating a list to store leader objects
     List<LeaderDetails> mLeaderDetails;
     public Context mContext;
     String skill_image_Url = "https://res.cloudinary.com/mikeattara/image/upload/v1596700835/skill-IQ-trimmed.png";
 
+    //A Constructor that accept a leader object
     public SkillAdapter(List<LeaderDetails> pLeaderDetails) {
         mLeaderDetails = pLeaderDetails;
     }
 
-    /**
-     * TODO: WHY IS THE SKILL NUMBER IS'NT SHOWING
-     * @param parent
-     * @param viewType
-     * @return
-     */
 
     @NonNull
     @Override
     public SkillAdapter.ViewHolderSkill onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         mContext = parent.getContext();
-        ViewGroup group =(ViewGroup) LayoutInflater.from(mContext)
-                .inflate(R.layout.leaders,parent,false);
-        return new ViewHolderSkill(group) ;
+        //Inflating the layout in which the recycle will use to populate the leader objects
+        ViewGroup group = (ViewGroup) LayoutInflater.from(mContext)
+                .inflate(R.layout.leaders, parent, false);
+        return new ViewHolderSkill(group);
     }
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderSkill holder, int position) {
-    final   LeaderDetails leaderDetails = mLeaderDetails.get(position);
+        ///getting the objects at each position from the leaderDetail list
+        final LeaderDetails leaderDetails = mLeaderDetails.get(position);
+        //Binding the objects to the widgets
         holder.name.setText(leaderDetails.getName());
         holder.score.setText(leaderDetails.getPerformance().concat(" Skill IQ Score, "));
         holder.country.setText(leaderDetails.getCountry());
@@ -56,13 +55,13 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolderSk
         return mLeaderDetails.size();
     }
 
-    public class ViewHolderSkill extends RecyclerView.ViewHolder
-    {
-        TextView name ,score,country;
-    ImageView badge;
+    public class ViewHolderSkill extends RecyclerView.ViewHolder {
+        TextView name, score, country;
+        ImageView badge;
 
         public ViewHolderSkill(@NonNull View itemView) {
             super(itemView);
+            //Getting references to the view in the layouts
             name = itemView.findViewById(R.id.tvName);
             score = itemView.findViewById(R.id.tvScore);
             country = itemView.findViewById(R.id.tvCountry);
