@@ -3,6 +3,7 @@ package com.oyatech.leaderboard.SubmitAsignment;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -42,13 +43,9 @@ public class Submit extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setFullScreen();
-       /* getWindow().setStatusBarColor(Color.TRANSPARENT);
-        getWindow().setNavigationBarColor(Color.TRANSPARENT);*/
+
         setContentView(R.layout.activity_submit);
 
-/**
- * TODO: CUSTOMIZE THE TOOLBAR TO DISPLAY ON THE LEADER BOARD
- */
         name = findViewById(R.id.txtFirstName);
         lastName = findViewById(R.id.txtLastName);
         email = findViewById(R.id.txtEmail);
@@ -92,7 +89,6 @@ public class Submit extends AppCompatActivity  {
                                     sentStatus();
                                 }
                             },2000);
-                            Toast.makeText(Submit.this, "Response " +response.code(), Toast.LENGTH_SHORT).show();
 
                             }
                         }
@@ -150,16 +146,5 @@ public class Submit extends AppCompatActivity  {
             getWindow().setNavigationBarColor(Color.TRANSPARENT);
         }
     }
-    private void confirmation()
-    {
-        mDialog.setTitle("Please confirm submission");
-        mDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialog) {
-                Toast.makeText(Submit.this, "Submission Canceled", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
 
 }
