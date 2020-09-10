@@ -23,13 +23,15 @@ public class LeaderBoard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setFullScreen();
         setContentView(R.layout.activity_leader_board);
-    //    getActionBar().setBackgroundDrawable();
+
 mTabLayout = findViewById(R.id.tbLayout);
 mViewPager = findViewById(R.id.viewPage);
 submit = findViewById(R.id.btnSubmission);
 
 FragmentAdapter fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(),2);
+//Binding the fragment instance to the ViewPager
 mViewPager.setAdapter(fragmentAdapter);
+//Binding the ViewPager to the Tablayout
 mTabLayout.setupWithViewPager(mViewPager);
 
 submit.setOnClickListener(new View.OnClickListener() {

@@ -1,6 +1,8 @@
 package com.oyatech.leaderboard.SubmitAsignment;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,9 +31,8 @@ public class Submit extends AppCompatActivity {
     TextView name, lastName, email, gitAddress;
     Button submit;
     Dialog mDialog;
-    ImageView mImageView;
+    ImageView backward;
     ProgressBar mProgressBar;
-    int submissionStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,56 +47,16 @@ public class Submit extends AppCompatActivity {
 
 
         mDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
-        final SubmitAssignment submitAssignment = new SubmitServices().buildServices(SubmitAssignment.class);
+
         submit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(final View v) {
-
-                String firstName = name.getText().toString();
-                String LName = lastName.getText().toString();
-                String UserEmail = email.getText().toString();
-                String git = gitAddress.getText().toString();
-                if (!firstName.isEmpty() && !LName.isEmpty() && !UserEmail.isEmpty() && !git.isEmpty()) {
-                    mProgressBar.setVisibility(View.VISIBLE);
-                    //Passing student details to the interface
-                    final Call<Void> mStudentDataCall = submitAssignment.sendAssignment(
-                            UserEmail, firstName, LName, git
-                    );
-                    mStudentDataCall.enqueue(new Callback<Void>() {
-                        @Override
-                        public void onResponse(Call<Void> call, Response<Void> response) {
-                            Log.i("Submission", "onResponse: " + response.code());
-                            submissionStatus = response.code();
-                            if (response.isSuccessful()) {
-                                mProgressBar.setVisibility(View.INVISIBLE);
-                                new Handler().postDelayed(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        sentStatus();
-                                    }
-                                }, 2000);
-
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Void> call, Throwable t) {
-                            Log.i("Submission", "onFailure: " + t.getMessage());
-                            mProgressBar.setVisibility(View.INVISIBLE);
-                            failStatus();
-                            Snackbar.make(v,"Check Your Internet connection",Snackbar.LENGTH_LONG).show();
-
-
-                        }
-                    });
-                } else
-                    Toast.makeText(Submit.this, "Please Fill All Fields",
-                            Toast.LENGTH_SHORT).show();
+                Confirmation();
             }
         });
 
-        mImageView.setOnClickListener(new View.OnClickListener() {
+        backward.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Submit.this, LeaderBoard.class));
@@ -137,14 +98,90 @@ public class Submit extends AppCompatActivity {
 
     private void    initialize()
     {
+        //Getting reference to the widgets
         name = findViewById(R.id.txtFirstName);
         lastName = findViewById(R.id.txtLastName);
         email = findViewById(R.id.txtEmail);
         gitAddress = findViewById(R.id.txtGithubAddress);
         submit = findViewById(R.id.btnSubmit);
-        mImageView = findViewById(R.id.back);
+        backward = findViewById(R.id.back);
         mProgressBar = findViewById(R.id.submitProgress);
         mProgressBar.setVisibility(View.INVISIBLE);
 
+    }
+
+    public void Confirmation()
+    {Button yes;
+    ImageView cancel;
+    //Creating the confirmation dialogue
+        AlertDialog.Builder builder = new AlertDialog.Builder(Submit.this);
+        View view = getLayoutInflater().inflate(R.layout.confirm,null);
+        builder.setView(view);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
+
+        yes = view.findViewById(R.id.yes);
+        cancel = view.findViewById(R.id.igCancel);
+
+        yes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick( View v) {
+                dialog.dismiss();
+                sendStudentInformation(v);
+                Snackbar.make(v,"Confirmed",Snackbar.LENGTH_LONG).show();
+            }
+        });
+
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //make dialogue to disappear
+                dialog.dismiss();
+
+            }
+        });
+
+    }
+
+    private void sendStudentInformation(final View v)
+    { final SubmitAssignment submitAssignment = new SubmitServices().buildServices(SubmitAssignment.class);
+          String firstName = name.getText().toString();
+                String LName = lastName.getText().toString();
+                String UserEmail = email.getText().toString();
+                String git = gitAddress.getText().toString();
+                if (!firstName.isEmpty() && !LName.isEmpty() && !UserEmail.isEmpty() && !git.isEmpty()) {
+                    mProgressBar.setVisibility(View.VISIBLE);
+                    //Passing student details to the interface
+                    final Call<Void> mStudentDataCall = submitAssignment.sendAssignment(
+                            UserEmail, firstName, LName, git
+                    );
+                    mStudentDataCall.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            Log.i("Submission", "onResponse: " + response.code());
+                            if (response.isSuccessful()) {
+                                mProgressBar.setVisibility(View.INVISIBLE);
+                                //Delay for two seconds before progressbar disappear
+                                new Handler().postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        sentStatus();
+                                    }
+                                }, 2000);
+
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Void> call, Throwable t) {
+                            Log.i("Submission", "onFailure: " + t.getMessage());
+                            mProgressBar.setVisibility(View.INVISIBLE);
+                            failStatus();
+                            Snackbar.make(v,"Check Your Internet connection",Snackbar.LENGTH_LONG).show();
+                        }
+                    });
+                } else
+                    Toast.makeText(Submit.this, "Please Fill All Fields",
+                            Toast.LENGTH_SHORT).show();
     }
 }

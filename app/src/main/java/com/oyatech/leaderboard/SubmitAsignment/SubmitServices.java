@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class SubmitServices {
+    //A service class to implement the Retrofit interface
     private final static String SEND_URL ="https://docs.google.com/forms/d/e/";
     private static Retrofit.Builder builder = new Retrofit.Builder().baseUrl(SEND_URL)
             .addConverterFactory(GsonConverterFactory.create());
