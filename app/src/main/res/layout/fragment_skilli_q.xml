@@ -5,7 +5,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".LearnersFragment">
+    tools:context=".TopLearner.LearnersFragment">
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/skillsRecycle"
         android:layout_width="0dp"

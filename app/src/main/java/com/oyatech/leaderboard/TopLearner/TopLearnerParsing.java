@@ -1,17 +1,18 @@
-package com.oyatech.leaderboard;
+package com.oyatech.leaderboard.TopLearner;
 
 import android.os.AsyncTask;
 import android.view.View;
 
+import com.oyatech.leaderboard.Util.APIUtil;
 import com.oyatech.leaderboard.leaners.LeaderDetails;
 
 import java.net.URL;
 import java.util.ArrayList;
 
-import static com.oyatech.leaderboard.LearnersFragment.mProgressBar;
-import static com.oyatech.leaderboard.LearnersFragment.mRecyclerView;
+import static com.oyatech.leaderboard.TopLearner.LearnersFragment.mProgressBar;
+import static com.oyatech.leaderboard.TopLearner.LearnersFragment.mRecyclerView;
 
-public class APIParsing extends AsyncTask<URL,Void,String> {
+public class TopLearnerParsing extends AsyncTask<URL,Void,String> {
 
 
  static String learnersResult = null;
@@ -32,9 +33,7 @@ public class APIParsing extends AsyncTask<URL,Void,String> {
 
             ArrayList<LeaderDetails> leader = APIUtil.getLeaders(learnersResult);
                 mProgressBar.setVisibility(View.INVISIBLE);
-
-            RecycleViewAdapter adapter = new RecycleViewAdapter(leader);
-
+            TopLearnerAdapter adapter = new TopLearnerAdapter(leader);
             mRecyclerView.setAdapter(adapter);
 
 

@@ -28,8 +28,9 @@
              android:layout_marginLeft="180dp"
              android:layout_marginTop="8dp"
              android:background="@drawable/round_submit"
+             android:backgroundTintMode="add"
              android:gravity="center|right"
-             android:text="Sumbit"
+             android:text="Submit"
              android:textAppearance="@style/TextAppearance.AppCompat.Large"></Button>
       </androidx.appcompat.widget.Toolbar>
 
@@ -41,6 +42,7 @@
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        app:tabIndicatorHeight="2dp"
+       
        app:tabTextAppearance="@android:style/TextAppearance.Widget.TabWidget"
        android:background="@color/dark"
        app:tabSelectedTextColor="@android:color/white"

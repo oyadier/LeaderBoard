@@ -1,7 +1,7 @@
 package com.oyatech.leaderboard.leaners;
 
 public class LeaderDetails {
-    String name, performance,country,image;
+    String name, performance,country;
 
     public LeaderDetails(String pName, String pPerformance, String pCountry) {
         name = pName;
@@ -9,9 +9,6 @@ public class LeaderDetails {
         country = pCountry;
     }
 
-    public String getImage() {
-        return image;
-    }
 
     public LeaderDetails(String pName, String pPerformance, String pCountry, String image) {
         name = pName;
@@ -32,15 +29,9 @@ public class LeaderDetails {
         return performance;
     }
 
-    public void setPerformance(String pPerformance) {
-        performance = pPerformance;
-    }
 
     public String getCountry() {
         return country;
     }
 
-    public void setCountry(String pCountry) {
-        country = pCountry;
-    }
 }

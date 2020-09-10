@@ -1,4 +1,4 @@
-package com.oyatech.leaderboard;
+package com.oyatech.leaderboard.Util;
 
 import android.net.Uri;
 
@@ -83,7 +83,7 @@ public class APIUtil {
         return leaderDetails;
     }
 
- /* public static ArrayList<LeaderDetails> getSkillLeaders(String jsonResult) {
+ public static ArrayList<LeaderDetails> getSkillLeaders(String jsonResult) {
         ArrayList<LeaderDetails> skillLeaders = new ArrayList<>();
         try {
             skillLeaders = new ArrayList<>();
@@ -100,5 +100,5 @@ public class APIUtil {
             pE.printStackTrace();
         }
         return skillLeaders;
-    }*/
+    }
 }

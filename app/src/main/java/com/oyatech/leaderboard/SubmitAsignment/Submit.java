@@ -11,10 +11,13 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +36,7 @@ public class Submit extends AppCompatActivity  {
     Button submit;
     Dialog mDialog ;
     ImageView mImageView;
+    ProgressBar mProgressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +55,9 @@ public class Submit extends AppCompatActivity  {
         gitAddress = findViewById(R.id.txtGithubAddress);
         submit = findViewById(R.id.btnSubmit);
         mImageView = findViewById(R.id.back);
+        mProgressBar = findViewById(R.id.submitProgress);
+        mProgressBar.setVisibility(View.INVISIBLE);
+
 
 
         mDialog = new Dialog(this);
@@ -58,31 +65,40 @@ public class Submit extends AppCompatActivity  {
 
         mDialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
         final SubmitAssignment   submitAssignment = new SubmitServices().buildServices(SubmitAssignment.class);
-
         submit.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                confirmation();
+                mProgressBar.setVisibility(View.VISIBLE);
                 String firstName = name.getText().toString();
                 String LName = lastName.getText().toString();
-                String UserEmail = email.getText().toString();
-                String git = gitAddress.getText().toString();
-                if(!firstName.isEmpty() && !LName.isEmpty() && !UserEmail.isEmpty()&&!git.isEmpty()) {
-            final    Call<StudentData>mStudentDataCall = submitAssignment.sendAssignment(
-                        firstName,LName,UserEmail,git
-                );
-                mStudentDataCall.enqueue(new Callback<StudentData>() {
-                    @Override
-                    public void onResponse(Call<StudentData> call, Response<StudentData> response) {
-                        if (response.isSuccessful())
-                        {
-                            sentStatus();
-                        }
+                 String UserEmail = email.getText().toString();
+               String git = gitAddress.getText().toString();
+               if(!firstName.isEmpty() && !LName.isEmpty() && !UserEmail.isEmpty()&&!git.isEmpty()) {
+            final   Call<Void>mStudentDataCall = submitAssignment.sendAssignment(
+                    UserEmail, firstName,LName,git
+                    );
+                mStudentDataCall.enqueue(new Callback<Void>() {
+                        @Override
+                        public void onResponse(Call<Void> call, Response<Void> response) {
+                            Log.i("Submission", "onResponse: " + response.code());
 
-                    }
-                    @Override
-                    public void onFailure(Call<StudentData> call, Throwable t) {
+                       if (response.isSuccessful())
+                        {
+                            mProgressBar.setVisibility(View.INVISIBLE);
+                            new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
+                                    sentStatus();
+                                }
+                            },2000);
+                            Toast.makeText(Submit.this, "Response " +response.code(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                        @Override
+                    public void onFailure(Call<Void> call, Throwable t) {
+                        Log.i("Submission", "onFailure: " + t.getMessage());
                         failStatus();
                     }
                 });

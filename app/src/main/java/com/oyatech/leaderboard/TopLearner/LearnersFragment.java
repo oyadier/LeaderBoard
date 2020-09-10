@@ -1,4 +1,4 @@
-package com.oyatech.leaderboard;
+package com.oyatech.leaderboard.TopLearner;
 
 import android.os.Bundle;
 
@@ -10,7 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
-import android.widget.TextView;
+
+import com.oyatech.leaderboard.R;
+import com.oyatech.leaderboard.Util.APIUtil;
 
 
 public class LearnersFragment extends Fragment {
@@ -35,7 +37,7 @@ static RecyclerView mRecyclerView;
                 RecyclerView.VERTICAL,false);
         mRecyclerView.setLayoutManager(manager);
 
-        new APIParsing().execute(APIUtil.leardersUrl(TOP_LEANER));
+        new TopLearnerParsing().execute(APIUtil.leardersUrl(TOP_LEANER));
 
         return rootView;
     }

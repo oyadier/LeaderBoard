@@ -1,4 +1,4 @@
-package com.oyatech.leaderboard.skills;
+package com.oyatech.leaderboard.skillIQ;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -35,6 +35,7 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolderSk
     @NonNull
     @Override
     public SkillAdapter.ViewHolderSkill onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         mContext = parent.getContext();
         ViewGroup group =(ViewGroup) LayoutInflater.from(mContext)
                 .inflate(R.layout.leaders,parent,false);
@@ -43,9 +44,9 @@ public class SkillAdapter extends RecyclerView.Adapter<SkillAdapter.ViewHolderSk
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolderSkill holder, int position) {
-        LeaderDetails leaderDetails = mLeaderDetails.get(position);
+    final   LeaderDetails leaderDetails = mLeaderDetails.get(position);
         holder.name.setText(leaderDetails.getName());
-        holder.score.setText(leaderDetails.getPerformance());
+        holder.score.setText(leaderDetails.getPerformance().concat(" Skill IQ Score, "));
         holder.country.setText(leaderDetails.getCountry());
         Picasso.with(mContext).load(skill_image_Url).into(holder.badge);
     }
